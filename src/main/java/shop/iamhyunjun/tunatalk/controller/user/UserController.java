@@ -3,10 +3,7 @@ package shop.iamhyunjun.tunatalk.controller.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import shop.iamhyunjun.tunatalk.dto.user.ResponseDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserLoginDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserSignupDto;
@@ -35,5 +32,9 @@ public class UserController {
         String data = "로그인 성공";
         return ResponseEntity.ok(new ResponseDto(data, 200));
     }
+
+//    @PutMapping("/{userId}")
+//    @ResponseBody
+//    public ResponseDto
 
 }

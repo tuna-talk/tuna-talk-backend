@@ -47,7 +47,9 @@ public class UserService {
         }
 
         User user = new User(userNickname, userPw, userEmail);
+        log.info("전");
         userRepository.save(user);
+        log.info("후");
     }
 
     public void login(UserLoginDto userLoginDto, HttpServletResponse response) {
