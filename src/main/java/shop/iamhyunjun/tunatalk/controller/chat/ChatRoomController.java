@@ -3,6 +3,7 @@ package shop.iamhyunjun.tunatalk.controller.chat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import shop.iamhyunjun.tunatalk.config.security.UserDetailsImpl;
 import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomCreateRequestDto;
@@ -16,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
-
     @ResponseBody
     @PostMapping("/chats")
     public ChatRoomResponseDto chatroomCreate(@RequestBody ChatRoomCreateRequestDto chatRoomCreateRequestDto) {

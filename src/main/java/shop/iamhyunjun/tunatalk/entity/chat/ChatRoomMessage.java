@@ -22,4 +22,10 @@ public class ChatRoomMessage extends BaseTimeEntity {
     private String message;
     @ManyToOne
     private ChatRoom chatRoom;
+
+    public ChatRoomMessage(User sender, String message, ChatRoom chatRoom) {
+        this.sender = sender;
+        this.message = message;
+        this.chatRoom = chatRoom;
+    }
 }
