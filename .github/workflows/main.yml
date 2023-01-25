@@ -2,7 +2,7 @@ name: tunatalk server CI/CD
 
 on:
   push:
-    branches: [ main, "server/CI,CD"]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
