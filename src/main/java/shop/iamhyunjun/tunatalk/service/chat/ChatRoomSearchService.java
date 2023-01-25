@@ -31,6 +31,10 @@ public class ChatRoomSearchService {
 //        }
 
         List<ChatRoomUsers> chatRoomUsers = chatRoomUsersRepository.findAllByChatRoom_RoomNameAndRoomUser(chatRoomSearchRequestDto.getRoomName(), userDetailsImpl.getUser());
+        System.out.println("여긴오겠ㅈ니;???");
+        for (ChatRoomUsers chatRoomUser : chatRoomUsers) {
+            System.out.println(chatRoomUser.getChatRoom().getRoomName());
+        }
 
         List<ChatRoomSearchResponseDto> chatRoomSearchResponseDtos = new ArrayList<>();
         for (ChatRoomUsers chatRoomUser : chatRoomUsers) {

@@ -8,11 +8,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class ChatRoomResponseListDto {
-    private ChatRoomResponseUserDto chatRoomResponseUserDto;
-    private List<ChatRoomMessagesResponseDto> chatRoomMessagesResponseDtos;
+    private ChatRoomResponseUserDto chatRoom;
+    private List<ChatRoomMessagesResponseDto> chats;
 
     public ChatRoomResponseListDto(ChatRoomResponseUserDto chatRoomResponseUserDto, List<ChatRoomMessagesResponseDto> chatRoomMessagesResponseDtos) {
-        this.chatRoomResponseUserDto = chatRoomResponseUserDto;
-        this.chatRoomMessagesResponseDtos = chatRoomMessagesResponseDtos;
+        this.chatRoom = chatRoomResponseUserDto;
+        this.chats = chatRoomMessagesResponseDtos;
     }
 }

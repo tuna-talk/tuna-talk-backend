@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.iamhyunjun.tunatalk.config.security.UserDetailsImpl;
-import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomMessagesResponseDto;
-import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomResponseDto;
-import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomResponseListDto;
-import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomResponseUserDto;
+import shop.iamhyunjun.tunatalk.dto.chat.*;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoom;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoomMessage;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoomUsers;
@@ -26,8 +23,8 @@ public class ChatRoomService {
     private final ChatRoomMessageRepository chatRoomMessageRepository;
     private final ChatRoomUsersRepository chatRoomUsersRepository;
     @Transactional
-    public ChatRoomResponseDto createChatRoom(String roomName) {
-        ChatRoom chatRoom = new ChatRoom(roomName);
+    public ChatRoomResponseDto createChatRoom(ChatRoomCreateRequestDto chatRoomCreateRequestDto) {
+        ChatRoom chatRoom = new ChatRoom(chatRoomCreateRequestDto.getRoomName());
         chatRoomRepository.save(chatRoom);
 
         ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom);

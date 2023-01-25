@@ -1,10 +1,12 @@
 package shop.iamhyunjun.tunatalk.controller.chat;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import shop.iamhyunjun.tunatalk.config.security.UserDetailsImpl;
 import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomSearchRequestDto;
 import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomSearchResponseDto;
@@ -16,9 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChatRoomSearchController {
     private final ChatRoomSearchService chatRoomSearchService;
-    @GetMapping("/chat/search")
+    @ResponseBody
+    @GetMapping("/chats/search")
     public List<ChatRoomSearchResponseDto> chatSearch(@RequestBody ChatRoomSearchRequestDto chatRoomSearchRequestDto,
                                                 @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+        System.out.println(chatRoomSearchRequestDto.getRoomName());
+        System.out.println(userDetailsImpl.getUser().getUserNickname());
+        System.out.println(userDetailsImpl.getUser().getUserName());
         List<ChatRoomSearchResponseDto> chatRoomSearchResponseDtos = chatRoomSearchService.searchChatRoom(chatRoomSearchRequestDto, userDetailsImpl);
         return chatRoomSearchResponseDtos;
     }
