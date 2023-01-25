@@ -20,10 +20,11 @@ public class HjTestController {
         List<String> realProfiles = Arrays.asList("real1", "real2");
         String defaultProfile = profile.isEmpty() ? "default" : profile.get(0);
 
-        return profile.stream()
-                .filter(realProfiles::contains)
-                .findAny()
-                .orElse(defaultProfile);
+//        return profile.stream()
+//                .filter(realProfiles::contains)
+//                .findAny()
+//                .orElse(defaultProfile);
+        return "zzz";
     }
 
 }
