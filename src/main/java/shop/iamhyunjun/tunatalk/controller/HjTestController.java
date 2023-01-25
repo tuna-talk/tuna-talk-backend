@@ -15,7 +15,7 @@ public class HjTestController {
     public String success() {
 
 
-        return "성공";
+        return "return 200";
     }
 
 }
