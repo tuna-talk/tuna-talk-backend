@@ -1,6 +1,7 @@
 package shop.iamhyunjun.tunatalk.controller.user;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,17 +10,21 @@ import shop.iamhyunjun.tunatalk.dto.user.UserLoginDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserSignupDto;
 import shop.iamhyunjun.tunatalk.service.user.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@Slf4j
 public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity<?> signup(@RequestBody UserSignupDto userSignUpDto){
+    public ResponseEntity<?> signup(@RequestBody UserSignupDto userSignUpDto, HttpServletRequest request){
+        log.info(request.getRequestURI());
+
         userService.signup(userSignUpDto);
         String data = "회원가입 성공";
         return ResponseEntity.ok(new ResponseDto(data, 200));
