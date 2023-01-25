@@ -29,13 +29,12 @@ public class UserService {
     // 회원가입
     public void signup(UserSignupDto userSignUpDto) {
         String userNickname = userSignUpDto.getUserNickname();
-        String userName = userSignUpDto.getUserName();
         String userPw = userSignUpDto.getUserPw();
         String userPwCheck = userSignUpDto.getUserPwCheck();
         String userEmail = userSignUpDto.getUserEmail();
 
         // 아이디 중복 검사
-        Optional<User> userNameDuplicate = userRepository.findByUserName(userSignUpDto.getUserName());
+        Optional<User> userNameDuplicate = userRepository.findByUserEmail(userSignUpDto.getUserEmail());
         if (userNameDuplicate.isPresent()) {
             throw new CheckApiException(ErrorCode.EXISTS_USER);
         }
@@ -47,16 +46,16 @@ public class UserService {
             userPw = passwordEncoder.encode(userSignUpDto.getUserPw()); // 비밀번호 일치하면 인코딩
         }
 
-        User user = new User(userNickname, userName, userPw, userEmail);
+        User user = new User(userNickname, userPw, userEmail);
         userRepository.save(user);
     }
 
     public void login(UserLoginDto userLoginDto, HttpServletResponse response) {
-        String userName = userLoginDto.getUserName();
+        String userName = userLoginDto.getUserEmail();
         String userPw = userLoginDto.getUserPw();
 
         // 아이디 일치 여부
-        User user = userRepository.findByUserName(userName).orElseThrow(
+        User user = userRepository.findByUserEmail(userName).orElseThrow(
                 () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
         );
         // 비밀번호 일치 여부
@@ -64,6 +63,6 @@ public class UserService {
             throw new CheckApiException(ErrorCode.NOT_EQUALS_PASSWORD);
         }
 
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserName()));
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserEmail()));
     }
 }
