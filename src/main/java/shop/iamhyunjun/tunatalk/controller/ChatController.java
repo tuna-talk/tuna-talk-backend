@@ -14,6 +14,6 @@ public class ChatController {
     @ResponseBody
     @MessageMapping("/chat/message") // socket 통신은 request를 안주나???
     public void message(ChatMessageDto chatMessageDto) {
-        messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageDto.getRoomId(), chatMessageDto); // + roomId 있었음
+        messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageDto.getRoomId(), chatMessageDto);
     }
 }

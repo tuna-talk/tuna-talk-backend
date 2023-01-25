@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatRoomMessage {
+public class ChatRoomMessage extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long chatRoomMessageId;
