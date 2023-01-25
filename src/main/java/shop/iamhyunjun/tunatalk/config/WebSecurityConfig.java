@@ -1,7 +1,6 @@
 package shop.iamhyunjun.tunatalk.config;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,13 +16,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import shop.iamhyunjun.tunatalk.config.jwt.JwtAuthFilter;
 import shop.iamhyunjun.tunatalk.config.jwt.JwtUtil;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@Slf4j
 public class WebSecurityConfig {
     private final JwtUtil jwtUtil;
 
@@ -41,10 +37,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpServletRequest request) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
-
-        log.info(request.getRequestURI());
 
         // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
