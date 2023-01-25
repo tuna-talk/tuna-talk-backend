@@ -9,6 +9,8 @@ import shop.iamhyunjun.tunatalk.config.exception.CheckApiException;
 import shop.iamhyunjun.tunatalk.config.exception.ErrorCode;
 import shop.iamhyunjun.tunatalk.config.jwt.JwtUtil;
 import shop.iamhyunjun.tunatalk.dto.user.UserLoginDto;
+import shop.iamhyunjun.tunatalk.dto.user.UserRequestDto;
+import shop.iamhyunjun.tunatalk.dto.user.UserResponseDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserSignupDto;
 import shop.iamhyunjun.tunatalk.entity.user.User;
 import shop.iamhyunjun.tunatalk.repository.user.UserRepository;
@@ -66,5 +68,12 @@ public class UserService {
         }
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserEmail()));
+    }
+
+    public UserRequestDto update(String userEmail, UserRequestDto userRequestDto, User user) {
+        if (user.getUserEmail().equals(userEmail)){
+            user.update(userRequestDto);
+        }
+        return new UserRequestDto(user);
     }
 }
