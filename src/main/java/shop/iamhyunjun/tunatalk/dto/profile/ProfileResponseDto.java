@@ -1,8 +1,10 @@
 package shop.iamhyunjun.tunatalk.dto.profile;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import shop.iamhyunjun.tunatalk.entity.user.User;
 @Getter
+@RequiredArgsConstructor
 public class ProfileResponseDto {
     private String userImage;
     private String userMessage;
