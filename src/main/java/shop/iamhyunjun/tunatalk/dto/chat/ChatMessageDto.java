@@ -1,4 +1,4 @@
-package shop.iamhyunjun.tunatalk.dto;
+package shop.iamhyunjun.tunatalk.dto.chat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

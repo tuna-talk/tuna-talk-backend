@@ -1,8 +1,9 @@
-package shop.iamhyunjun.tunatalk.entity;
+package shop.iamhyunjun.tunatalk.entity.chat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import shop.iamhyunjun.tunatalk.entity.BaseTimeEntity;
 
 import javax.persistence.*;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatRoom extends BaseTimeEntity{
+public class ChatRoom extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long chatRoomId;
