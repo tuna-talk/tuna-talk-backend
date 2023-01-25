@@ -2,6 +2,7 @@ package shop.iamhyunjun.tunatalk.entity.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import shop.iamhyunjun.tunatalk.dto.profile.ProfileRequestDto;
 
 import javax.persistence.*;
 
@@ -40,5 +41,11 @@ public class User {
         this.userName = userName;
         this.userPw = userPw;
         this.userEmail = userEmail;
+    }
+
+    public void updateProfile(ProfileRequestDto profileRequestDto) {
+        this.userImage = profileRequestDto.getUserImage();
+        this.userMessage = profileRequestDto.getUserMessage();
+        this.userNickname = profileRequestDto.getUserNickname();
     }
 }
