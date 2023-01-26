@@ -3,8 +3,11 @@ package shop.iamhyunjun.tunatalk.entity.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.iamhyunjun.tunatalk.dto.user.UserRequestDto;
+import shop.iamhyunjun.tunatalk.entity.friend.Friend;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "USERS")
 @Getter
@@ -32,6 +35,9 @@ public class User {
 
     @Column(nullable = true)
     private String userImage;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Friend> userList = new ArrayList<>();
 
     public User(String userNickname, String userPw, String userEmail) {
         this.userNickname = userNickname;
