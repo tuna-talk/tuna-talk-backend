@@ -64,8 +64,10 @@ public class ChatRoomService {
 
         List<ChatRoomResponseDto> chatRoomResponseDtos = new ArrayList<>();
         for (ChatRoom chatRoom : chatRooms) {
-            ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom, userDetailsImpl.getUser());
-            chatRoomResponseDtos.add(chatRoomResponseDto);
+            if (chatRoom.getUser1() != null && chatRoom.getUser2() != null) {
+                ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom, userDetailsImpl.getUser());
+                chatRoomResponseDtos.add(chatRoomResponseDto);
+            }
         }
         return chatRoomResponseDtos;
     }
