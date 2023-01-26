@@ -14,6 +14,7 @@ public class ChatRoomResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private String roomName;
+    private String lastMessage;
 
     public ChatRoomResponseDto(ChatRoom chatRoom, User user) {
         this.chatRoomId = chatRoom.getChatRoomId();
@@ -21,5 +22,6 @@ public class ChatRoomResponseDto {
         this.modifiedAt = chatRoom.getModifiedAt();
         this.roomName = (chatRoom.getUser1().getUserEmail().equals(user.getUserEmail()))
                 ? chatRoom.getUser2().getUserNickname() : chatRoom.getUser1().getUserNickname();
+        this.lastMessage = chatRoom.getLastMessage();
     }
 }

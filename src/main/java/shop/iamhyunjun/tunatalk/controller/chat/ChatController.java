@@ -35,6 +35,9 @@ public class ChatController {
 
         ChatRoomRealResponseDto chatRoomRealResponseDto = new ChatRoomRealResponseDto(chatRoomMessage);
 
+        chatRoom.get().ChatRoomLastMessage(chatMessageDto.getMessage());
+        chatRoomRepository.save(chatRoom.get());
+
         messagingTemplate.convertAndSend("/sub/chats/" + chatMessageDto.getChatRoomId(), chatRoomRealResponseDto);
     }
 }

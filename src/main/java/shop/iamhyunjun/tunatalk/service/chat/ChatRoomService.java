@@ -1,8 +1,10 @@
 package shop.iamhyunjun.tunatalk.service.chat;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import shop.iamhyunjun.tunatalk.config.security.UserDetailsImpl;
 import shop.iamhyunjun.tunatalk.dto.chat.*;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoom;
@@ -33,7 +35,8 @@ public class ChatRoomService {
             throw new IllegalArgumentException("유저가 존재하지 않습니다.");
         }
 
-        if (chatRoomRepository.findByUser1AndUser2(userDetailsImpl.getUser(), user.get()).isPresent()) {
+        if (chatRoomRepository.findByUser1AndUser2(userDetailsImpl.getUser(), user.get()).isPresent()
+                || chatRoomRepository.findByUser1AndUser2(user.get(), userDetailsImpl.getUser()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 채팅방입니다.");
         }
 
@@ -81,5 +84,22 @@ public class ChatRoomService {
 
         ChatRoomResponseListDto chatRoomResponseListDto = new ChatRoomResponseListDto(chatRoomResponseUserDto, chatRoomMessagesResponseDtos);
         return chatRoomResponseListDto;
+    }
+
+    public ChatRoomDeleteResponseDto deleteChatRoom(@PathVariable Long chatRoomId,
+                                                    @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+        Optional<ChatRoom> chatRoom = chatRoomRepository.findByChatRoomId(chatRoomId);
+
+        if (chatRoom.get().getUser1().getUserEmail().equals(userDetailsImpl.getUser().getUserEmail())) {
+            chatRoom.get().ChatRoomUser1Delete();
+            chatRoomRepository.save(chatRoom.get());
+        } else {
+            chatRoom.get().ChatRoomUser2Delete();
+            chatRoomRepository.save(chatRoom.get());
+        }
+
+        ChatRoomDeleteResponseDto chatRoomDeleteResponseDto = new ChatRoomDeleteResponseDto();
+
+        return chatRoomDeleteResponseDto;
     }
 }
