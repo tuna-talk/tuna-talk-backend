@@ -10,7 +10,6 @@ import shop.iamhyunjun.tunatalk.config.exception.ErrorCode;
 import shop.iamhyunjun.tunatalk.config.jwt.JwtUtil;
 import shop.iamhyunjun.tunatalk.dto.user.UserLoginDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserRequestDto;
-import shop.iamhyunjun.tunatalk.dto.user.UserResponseDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserSignupDto;
 import shop.iamhyunjun.tunatalk.entity.user.User;
 import shop.iamhyunjun.tunatalk.repository.user.UserRepository;
@@ -70,7 +69,11 @@ public class UserService {
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserEmail()));
     }
 
-    public UserRequestDto update(String userEmail, UserRequestDto userRequestDto, User user) {
+    public UserRequestDto update(String userEmail, UserRequestDto userRequestDto) {
+        User user = userRepository.findByUserEmail(userEmail).orElseThrow(
+                () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
+        );
+
         if (user.getUserEmail().equals(userEmail)){
             user.update(userRequestDto);
         }

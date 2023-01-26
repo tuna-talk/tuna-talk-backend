@@ -39,9 +39,8 @@ public class UserController {
     @PutMapping("/{userEmail}")
     @ResponseBody
     public UserRequestDto update(@PathVariable String userEmail,
-                              @RequestBody UserRequestDto userRequestDto,
-                              @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return userService.update(userEmail, userRequestDto, userDetails.getUser());
+                              @RequestBody UserRequestDto userRequestDto){
+        return userService.update(userEmail, userRequestDto);
     }
 
 }
