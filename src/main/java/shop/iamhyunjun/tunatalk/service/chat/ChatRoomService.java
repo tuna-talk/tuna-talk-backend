@@ -98,6 +98,9 @@ public class ChatRoomService {
             chatRoomRepository.save(chatRoom.get());
         }
 
+        Optional<ChatRoomUsers> chatRoomUsers = chatRoomUsersRepository.findByChatRoomAndRoomUser(chatRoom.get(), userDetailsImpl.getUser());
+        chatRoomUsersRepository.delete(chatRoomUsers.get());
+
         ChatRoomDeleteResponseDto chatRoomDeleteResponseDto = new ChatRoomDeleteResponseDto();
 
         return chatRoomDeleteResponseDto;
