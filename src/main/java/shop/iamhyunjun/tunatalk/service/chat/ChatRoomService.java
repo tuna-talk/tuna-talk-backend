@@ -28,7 +28,6 @@ public class ChatRoomService {
     @Transactional
     public ChatRoomResponseDto createChatRoom(ChatRoomCreateRequestDto chatRoomCreateRequestDto, UserDetailsImpl userDetailsImpl) {
         Optional<User> user = userRepository.findByUserEmail(chatRoomCreateRequestDto.getOtherUserEmail());
-        System.out.println(user.get().getUserName());
 
         if (user.isEmpty()) {
             throw new IllegalArgumentException("유저가 존재하지 않습니다.");

@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDto {
+public class UserResponseDto {
 
     private String data;
 
     private int statuscode;
+
 }

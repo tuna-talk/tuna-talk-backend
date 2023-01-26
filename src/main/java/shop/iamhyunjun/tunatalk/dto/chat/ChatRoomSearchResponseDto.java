@@ -3,6 +3,7 @@ package shop.iamhyunjun.tunatalk.dto.chat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoom;
+import shop.iamhyunjun.tunatalk.entity.user.User;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +15,11 @@ public class ChatRoomSearchResponseDto {
     private LocalDateTime modifiedAt;
     private String roomName;
 
-    public ChatRoomSearchResponseDto(ChatRoom chatRoom) {
-        this.roomName = roomName;
+    public ChatRoomSearchResponseDto(ChatRoom chatRoom, User user) {
+        this.chatRoomId = chatRoom.getChatRoomId();
+        this.createdAt = chatRoom.getCreatedAt();
+        this.modifiedAt = chatRoom.getModifiedAt();
+        this.roomName = (chatRoom.getUser1().getUserEmail().equals(user.getUserEmail()))
+                ? chatRoom.getUser2().getUserNickname() : chatRoom.getUser1().getUserNickname();
     }
 }

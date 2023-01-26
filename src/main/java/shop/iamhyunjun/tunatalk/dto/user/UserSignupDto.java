@@ -5,8 +5,7 @@ import lombok.Getter;
 @Getter
 public class UserSignupDto {
     private String userNickname;
-    private String userName;
+    private String userEmail;
     private String userPw;
     private String userPwCheck;
-    private String userEmail;
 }

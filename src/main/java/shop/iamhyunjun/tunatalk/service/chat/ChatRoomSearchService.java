@@ -3,12 +3,15 @@ package shop.iamhyunjun.tunatalk.service.chat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shop.iamhyunjun.tunatalk.config.security.UserDetailsImpl;
+import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomResponseDto;
 import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomSearchRequestDto;
 import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomSearchResponseDto;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoom;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoomUsers;
+import shop.iamhyunjun.tunatalk.entity.user.User;
 import shop.iamhyunjun.tunatalk.repository.chat.ChatRoomRepository;
 import shop.iamhyunjun.tunatalk.repository.chat.ChatRoomUsersRepository;
+import shop.iamhyunjun.tunatalk.repository.user.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,28 +22,26 @@ import java.util.Optional;
 public class ChatRoomSearchService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomUsersRepository chatRoomUsersRepository;
+    private final UserRepository userRepository;
     public List<ChatRoomSearchResponseDto> searchChatRoom(ChatRoomSearchRequestDto chatRoomSearchRequestDto,
-                                                    UserDetailsImpl userDetailsImpl) {
-        //List<ChatRoom> chatRooms = chatRoomRepository.findAllByRoomName(chatRoomSearchRequestDto.getRoomName());
+                                                          UserDetailsImpl userDetailsImpl) {
 
-        //List<ChatRoom> chatRooms1 = new ArrayList<>();
+        List<ChatRoomUsers> chatRoomUsers = chatRoomUsersRepository.findAllByRoomUser(userDetailsImpl.getUser());
 
-//        for (ChatRoom chatRoom : chatRooms) {
-//            Optional<ChatRoomUsers> chatRoomUsers = chatRoomUsersRepository.findByChatRoomAndRoomUser(chatRoom, userDetailsImpl.getUser());
-//            chatRooms1.add(chatRoomUsers.get().getChatRoom());
-//        }
+        List<ChatRoom> chatRooms = new ArrayList<>();
 
-        //List<ChatRoomUsers> chatRoomUsers = chatRoomUsersRepository.findAllByChatRoom_RoomNameAndRoomUser(chatRoomSearchRequestDto.getRoomName(), userDetailsImpl.getUser());
-        System.out.println("여긴오겠ㅈ니;???");
-        //for (ChatRoomUsers chatRoomUser : chatRoomUsers) {
-            //System.out.println(chatRoomUser.getChatRoom().getRoomName());
-        //}
+        for (ChatRoomUsers chatRoomUser : chatRoomUsers) {
+            chatRooms.add(chatRoomUser.getChatRoom());
+        }
 
         List<ChatRoomSearchResponseDto> chatRoomSearchResponseDtos = new ArrayList<>();
-//        for (ChatRoomUsers chatRoomUser : chatRoomUsers) {
-//            ChatRoomSearchResponseDto chatRoomSearchResponseDto = new ChatRoomSearchResponseDto(chatRoomUser.getChatRoom());
-//            chatRoomSearchResponseDtos.add(chatRoomSearchResponseDto);
-//        }
+        for (ChatRoom chatRoom : chatRooms) {
+            if (chatRoom.getUser1().getUserNickname().equals(chatRoomSearchRequestDto.getRoomName())
+                    || chatRoom.getUser2().getUserNickname().equals(chatRoomSearchRequestDto.getRoomName())) {
+                ChatRoomSearchResponseDto chatRoomSearchResponseDto = new ChatRoomSearchResponseDto(chatRoom, userDetailsImpl.getUser());
+                chatRoomSearchResponseDtos.add(chatRoomSearchResponseDto);
+            }
+        }
 
         return chatRoomSearchResponseDtos;
     }

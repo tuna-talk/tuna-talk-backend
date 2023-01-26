@@ -21,10 +21,9 @@ public class ChatRoomSearchController {
     @ResponseBody
     @GetMapping("/chats/search")
     public List<ChatRoomSearchResponseDto> chatSearch(@RequestBody ChatRoomSearchRequestDto chatRoomSearchRequestDto,
-                                                @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+                                                      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
         System.out.println(chatRoomSearchRequestDto.getRoomName());
         System.out.println(userDetailsImpl.getUser().getUserNickname());
-        System.out.println(userDetailsImpl.getUser().getUserName());
         List<ChatRoomSearchResponseDto> chatRoomSearchResponseDtos = chatRoomSearchService.searchChatRoom(chatRoomSearchRequestDto, userDetailsImpl);
         return chatRoomSearchResponseDtos;
     }
