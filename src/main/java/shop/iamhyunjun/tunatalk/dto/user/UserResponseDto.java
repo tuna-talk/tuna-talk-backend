@@ -13,5 +13,4 @@ public class UserResponseDto {
 
     private int statuscode;
 
-
 }
