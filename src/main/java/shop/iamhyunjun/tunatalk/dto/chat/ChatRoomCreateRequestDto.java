@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatRoomCreateRequestDto {
     private String roomName;
+    private String otherUserEmail;
 
     public ChatRoomCreateRequestDto(String roomName) {
         this.roomName = roomName;

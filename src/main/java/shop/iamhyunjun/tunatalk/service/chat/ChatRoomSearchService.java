@@ -30,17 +30,17 @@ public class ChatRoomSearchService {
 //            chatRooms1.add(chatRoomUsers.get().getChatRoom());
 //        }
 
-        List<ChatRoomUsers> chatRoomUsers = chatRoomUsersRepository.findAllByChatRoom_RoomNameAndRoomUser(chatRoomSearchRequestDto.getRoomName(), userDetailsImpl.getUser());
+        //List<ChatRoomUsers> chatRoomUsers = chatRoomUsersRepository.findAllByChatRoom_RoomNameAndRoomUser(chatRoomSearchRequestDto.getRoomName(), userDetailsImpl.getUser());
         System.out.println("여긴오겠ㅈ니;???");
-        for (ChatRoomUsers chatRoomUser : chatRoomUsers) {
-            System.out.println(chatRoomUser.getChatRoom().getRoomName());
-        }
+        //for (ChatRoomUsers chatRoomUser : chatRoomUsers) {
+            //System.out.println(chatRoomUser.getChatRoom().getRoomName());
+        //}
 
         List<ChatRoomSearchResponseDto> chatRoomSearchResponseDtos = new ArrayList<>();
-        for (ChatRoomUsers chatRoomUser : chatRoomUsers) {
-            ChatRoomSearchResponseDto chatRoomSearchResponseDto = new ChatRoomSearchResponseDto(chatRoomUser.getChatRoom());
-            chatRoomSearchResponseDtos.add(chatRoomSearchResponseDto);
-        }
+//        for (ChatRoomUsers chatRoomUser : chatRoomUsers) {
+//            ChatRoomSearchResponseDto chatRoomSearchResponseDto = new ChatRoomSearchResponseDto(chatRoomUser.getChatRoom());
+//            chatRoomSearchResponseDtos.add(chatRoomSearchResponseDto);
+//        }
 
         return chatRoomSearchResponseDtos;
     }

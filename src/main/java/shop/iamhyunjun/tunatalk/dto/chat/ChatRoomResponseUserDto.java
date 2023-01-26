@@ -21,7 +21,8 @@ public class ChatRoomResponseUserDto {
         this.chatRoomId = chatRoom.getChatRoomId();
         this.createdAt = chatRoom.getCreatedAt();
         this.modifiedAt = chatRoom.getModifiedAt();
-        this.roomName = chatRoom.getRoomName();
+        this.roomName = (chatRoom.getUser1().getUserEmail().equals(user.getUserEmail()))
+                ? chatRoom.getUser2().getUserNickname() : chatRoom.getUser1().getUserNickname();
         this.userName = user.getUserName();
         this.userNickname = user.getUserNickname();
     }

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatMessageDto {
     private Long chatRoomId;
-    private String userName;
+    private String userEmail;
     private String message; // 메시지
 }

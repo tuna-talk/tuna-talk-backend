@@ -8,9 +8,11 @@ import shop.iamhyunjun.tunatalk.dto.chat.*;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoom;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoomMessage;
 import shop.iamhyunjun.tunatalk.entity.chat.ChatRoomUsers;
+import shop.iamhyunjun.tunatalk.entity.user.User;
 import shop.iamhyunjun.tunatalk.repository.chat.ChatRoomMessageRepository;
 import shop.iamhyunjun.tunatalk.repository.chat.ChatRoomRepository;
 import shop.iamhyunjun.tunatalk.repository.chat.ChatRoomUsersRepository;
+import shop.iamhyunjun.tunatalk.repository.user.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +24,30 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomMessageRepository chatRoomMessageRepository;
     private final ChatRoomUsersRepository chatRoomUsersRepository;
+    private final UserRepository userRepository;
     @Transactional
-    public ChatRoomResponseDto createChatRoom(ChatRoomCreateRequestDto chatRoomCreateRequestDto) {
-        ChatRoom chatRoom = new ChatRoom(chatRoomCreateRequestDto.getRoomName());
+    public ChatRoomResponseDto createChatRoom(ChatRoomCreateRequestDto chatRoomCreateRequestDto, UserDetailsImpl userDetailsImpl) {
+        Optional<User> user = userRepository.findByUserEmail(chatRoomCreateRequestDto.getOtherUserEmail());
+        System.out.println(user.get().getUserName());
+
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("유저가 존재하지 않습니다.");
+        }
+
+        if (chatRoomRepository.findByUser1AndUser2(userDetailsImpl.getUser(), user.get()).isPresent()) {
+            throw new IllegalArgumentException("이미 존재하는 채팅방입니다.");
+        }
+
+        ChatRoom chatRoom = new ChatRoom(userDetailsImpl.getUser(), user.get());
         chatRoomRepository.save(chatRoom);
 
-        ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom);
+        ChatRoomUsers chatRoomUsers1 = new ChatRoomUsers(chatRoom, userDetailsImpl.getUser());
+        chatRoomUsersRepository.save(chatRoomUsers1);
+
+        ChatRoomUsers chatRoomUsers2 = new ChatRoomUsers(chatRoom, user.get());
+        chatRoomUsersRepository.save(chatRoomUsers2);
+
+        ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom, userDetailsImpl.getUser());
         return chatRoomResponseDto;
     }
 
@@ -42,7 +62,7 @@ public class ChatRoomService {
 
         List<ChatRoomResponseDto> chatRoomResponseDtos = new ArrayList<>();
         for (ChatRoom chatRoom : chatRooms) {
-            ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom);
+            ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom, userDetailsImpl.getUser());
             chatRoomResponseDtos.add(chatRoomResponseDto);
         }
         return chatRoomResponseDtos;

@@ -19,14 +19,15 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
     @ResponseBody
     @PostMapping("/chats")
-    public ChatRoomResponseDto chatroomCreate(@RequestBody ChatRoomCreateRequestDto chatRoomCreateRequestDto) {
-        ChatRoomResponseDto chatRoomResponseDto = chatRoomService.createChatRoom(chatRoomCreateRequestDto);
+    public ChatRoomResponseDto chatroomCreate(@RequestBody ChatRoomCreateRequestDto chatRoomCreateRequestDto,
+                                              @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+        System.out.println(chatRoomCreateRequestDto.getOtherUserEmail());
+        ChatRoomResponseDto chatRoomResponseDto = chatRoomService.createChatRoom(chatRoomCreateRequestDto, userDetailsImpl);
         return chatRoomResponseDto;
     }
     @ResponseBody
     @GetMapping("/chats")
     public List<ChatRoomResponseDto> chatRooms(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
-        System.out.println(userDetailsImpl.getUser().getUserNickname());
         List<ChatRoomResponseDto> chatRoomResponseDtos = chatRoomService.readChatRooms(userDetailsImpl);
         return chatRoomResponseDtos;
     }

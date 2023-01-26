@@ -21,4 +21,8 @@ public class ChatRoomUsers {
     @ManyToOne
     private User roomUser;
 
+    public ChatRoomUsers(ChatRoom chatRoom, User roomUser) {
+        this.chatRoom = chatRoom;
+        this.roomUser = roomUser;
+    }
 }
