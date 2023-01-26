@@ -12,7 +12,6 @@ public class UserRequestDto {
     private String userMessage;
 
     public UserRequestDto(User user) {
-        this.userImage = user.getUserImage();
         this.userMessage = user.getUserMessage();
         this.userNickname = user.getUserNickname();
     }

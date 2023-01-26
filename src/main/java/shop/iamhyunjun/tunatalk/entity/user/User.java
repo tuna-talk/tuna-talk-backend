@@ -40,8 +40,12 @@ public class User {
     }
 
     public void update(UserRequestDto userRequestDto) {
-        this.userImage = userRequestDto.getUserImage();
         this.userNickname = userRequestDto.getUserNickname();
         this.userMessage = userRequestDto.getUserMessage();
+    }
+
+    public String imageUpdate(String userRequestDto) {
+        this.userImage = userRequestDto;
+        return userRequestDto;
     }
 }
