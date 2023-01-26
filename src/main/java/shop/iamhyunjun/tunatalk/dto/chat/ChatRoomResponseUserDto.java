@@ -14,7 +14,6 @@ public class ChatRoomResponseUserDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private String roomName;
-    private String userName;
     private String userNickname;
 
     public ChatRoomResponseUserDto(ChatRoom chatRoom, User user) {
@@ -23,7 +22,6 @@ public class ChatRoomResponseUserDto {
         this.modifiedAt = chatRoom.getModifiedAt();
         this.roomName = (chatRoom.getUser1().getUserEmail().equals(user.getUserEmail()))
                 ? chatRoom.getUser2().getUserNickname() : chatRoom.getUser1().getUserNickname();
-        this.userName = user.getUserName();
         this.userNickname = user.getUserNickname();
     }
 }
