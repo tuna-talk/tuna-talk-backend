@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import shop.iamhyunjun.tunatalk.config.exception.CheckApiException;
 import shop.iamhyunjun.tunatalk.config.exception.ErrorCode;
 import shop.iamhyunjun.tunatalk.config.jwt.JwtUtil;
@@ -13,8 +14,10 @@ import shop.iamhyunjun.tunatalk.dto.user.UserRequestDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserSignupDto;
 import shop.iamhyunjun.tunatalk.entity.user.User;
 import shop.iamhyunjun.tunatalk.repository.user.UserRepository;
+import shop.iamhyunjun.tunatalk.service.s3.S3Uploader;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,6 +29,7 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final S3Uploader s3Uploader;
 
     // 회원가입
     public void signup(UserSignupDto userSignUpDto) {
@@ -48,9 +52,7 @@ public class UserService {
         }
 
         User user = new User(userNickname, userPw, userEmail);
-        log.info("전");
         userRepository.save(user);
-        log.info("후");
     }
 
     public void login(UserLoginDto userLoginDto, HttpServletResponse response) {
@@ -77,6 +79,19 @@ public class UserService {
         if (user.getUserEmail().equals(userEmail)){
             user.update(userRequestDto);
         }
+
         return new UserRequestDto(user);
+    }
+
+    public String imageUpdate(String userEmail, MultipartFile multipartFile) throws IOException {
+        User user = userRepository.findByUserEmail(userEmail).orElseThrow(
+                () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
+        );
+
+        if (user.getUserEmail().equals(userEmail)){
+            s3Uploader.upload(multipartFile, "static");
+            user.imageUpdate(s3Uploader.upload(multipartFile, "static"));
+        }
+        return user.imageUpdate(s3Uploader.upload(multipartFile, "static"));
     }
 }
