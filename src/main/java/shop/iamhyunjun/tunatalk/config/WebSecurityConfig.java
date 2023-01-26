@@ -13,6 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import shop.iamhyunjun.tunatalk.config.jwt.JwtAuthFilter;
 import shop.iamhyunjun.tunatalk.config.jwt.JwtUtil;
 
@@ -44,12 +47,12 @@ public class WebSecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/favicon.ico").permitAll()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/auth/**").permitAll()
+//                .antMatchers("/favicon.ico").permitAll()
 //                .requestMatchers("/api/search").permitAll()
 //                .requestMatchers("/api/shop").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 // JWT 인증/인가를 사용하기 위한 설정
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
@@ -58,5 +61,21 @@ public class WebSecurityConfig {
 //        http.exceptionHandling().accessDeniedPage("/api/user/forbidden");
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOrigin("https://iamhyunjun.shop:3000");
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.addExposedHeader("Authorization");
+        configuration.addAllowedOriginPattern("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
