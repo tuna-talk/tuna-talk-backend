@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import shop.iamhyunjun.tunatalk.config.security.UserDetailsImpl;
 import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomCreateRequestDto;
+import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomDeleteResponseDto;
 import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomResponseDto;
 import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomResponseListDto;
 import shop.iamhyunjun.tunatalk.service.chat.ChatRoomService;
@@ -37,5 +38,12 @@ public class ChatRoomController {
     public ChatRoomResponseListDto chatRoom(@PathVariable Long chatRoomId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
         ChatRoomResponseListDto chatRoomResponseListDto = chatRoomService.readChatRoom(chatRoomId, userDetailsImpl);
         return chatRoomResponseListDto;
+    }
+
+    @ResponseBody
+    @DeleteMapping("/chats/{chatRoomId}")
+    public ChatRoomDeleteResponseDto chatRoomDelete(@PathVariable Long chatRoomId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+        ChatRoomDeleteResponseDto chatRoomDeleteResponseDto = chatRoomService.deleteChatRoom(chatRoomId, userDetailsImpl);
+        return chatRoomDeleteResponseDto;
     }
 }
