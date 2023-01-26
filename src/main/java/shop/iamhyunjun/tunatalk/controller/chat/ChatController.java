@@ -25,7 +25,7 @@ public class ChatController {
     private final UserRepository userRepository;
     private final ChatRoomRepository chatRoomRepository;
     @ResponseBody
-    @MessageMapping("/chats") // socket 통신은 request를 안주나???
+    @MessageMapping("/chats") // socket 통신은 request를 안주나??? // 혹시 @Transactional 줘야하나???
     public void message(ChatMessageDto chatMessageDto) {
         Optional<User> user = userRepository.findByUserEmail(chatMessageDto.getUserEmail());
         Optional<ChatRoom> chatRoom = chatRoomRepository.findByChatRoomId(chatMessageDto.getChatRoomId());

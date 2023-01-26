@@ -88,6 +88,7 @@ public class ChatRoomService {
         return chatRoomResponseListDto;
     }
 
+    @Transactional
     public ChatRoomDeleteResponseDto deleteChatRoom(@PathVariable Long chatRoomId,
                                                     @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
         Optional<ChatRoom> chatRoom = chatRoomRepository.findByChatRoomId(chatRoomId);
