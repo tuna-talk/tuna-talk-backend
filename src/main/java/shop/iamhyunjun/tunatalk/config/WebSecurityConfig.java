@@ -45,8 +45,11 @@ public class WebSecurityConfig {
 
         // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        //현준
+        http.cors().configurationSource(corsConfigurationSource());
+        
         http.authorizeRequests()
 //                .antMatchers("/").permitAll()
 //                .antMatchers("/auth/**").permitAll()
@@ -68,6 +71,7 @@ public class WebSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
+        //
         configuration.addAllowedOriginPattern("*");
 //      configuration.addAllowedOrigin("*");
         configuration.setAllowCredentials(true);
