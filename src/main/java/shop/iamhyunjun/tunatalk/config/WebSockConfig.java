@@ -21,6 +21,18 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
     }
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint("/ws-stomp").setAllowedOrigins("*").withSockJS();
+    }
+
+    @EventListener
+    public void connectEvent(SessionConnectEvent sessionConnectEvent){
+        System.out.println(sessionConnectEvent);
+        System.out.println("연결 성공 감지!_!#!#!#!@#!@@#!@!#!$!@");
+        //return "redirect:chat/message";
+    }
+    @EventListener
+    public void onDisconnectEvent(SessionDisconnectEvent sessionDisconnectEvent) {
+        System.out.println(sessionDisconnectEvent.getSessionId());
+        System.out.println("연결 끊어짐 감지!~!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 }
