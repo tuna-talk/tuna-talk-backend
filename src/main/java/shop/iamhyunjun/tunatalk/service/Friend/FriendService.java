@@ -26,9 +26,12 @@ public class FriendService {
 
     private final UserRepository userRepository;
 
-    public FriendResponseDto addFriend(FriendRequestDto friendRequestDto) {
+    public FriendResponseDto addFriend(String userEmail, FriendRequestDto friendRequestDto) {
+        User user = userRepository.findByUserEmail(userEmail).orElseThrow(
+                () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
+        );
 
-        Friend friend = new Friend(friendRequestDto);
+        Friend friend = new Friend(user, friendRequestDto);
 
         if (userRepository.findByUserEmail(friendRequestDto.getFriendEmail()).isPresent()){
             friendRepository.save(friend);
