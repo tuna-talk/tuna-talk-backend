@@ -13,14 +13,14 @@ public class ChatRoomResponseDto {
     private Long chatRoomId;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    private String roomName;
+    private String friendNickname;
     private String lastMessage;
 
     public ChatRoomResponseDto(ChatRoom chatRoom, User user) {
         this.chatRoomId = chatRoom.getChatRoomId();
         this.createdAt = chatRoom.getCreatedAt();
         this.modifiedAt = chatRoom.getModifiedAt();
-        this.roomName = (chatRoom.getUser1().getUserEmail().equals(user.getUserEmail()))
+        this.friendNickname = (chatRoom.getUser1().getUserEmail().equals(user.getUserEmail()))
                 ? chatRoom.getUser2().getUserNickname() : chatRoom.getUser1().getUserNickname();
         this.lastMessage = chatRoom.getLastMessage();
     }

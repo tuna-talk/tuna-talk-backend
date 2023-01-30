@@ -27,9 +27,23 @@ public class ChatRoomService {
     private final ChatRoomMessageRepository chatRoomMessageRepository;
     private final ChatRoomUsersRepository chatRoomUsersRepository;
     private final UserRepository userRepository;
+
+    //template test
+    public List<ChatRoomtemplateTestDto> readChatRooms() {
+        List<ChatRoom> chatRooms = chatRoomRepository.findAll();
+        List<ChatRoomtemplateTestDto> chatRoomtemplateTestDtos = new ArrayList<>();
+        for (ChatRoom chatRoom : chatRooms) {
+            ChatRoomtemplateTestDto chatRoomtemplateTestDto = new ChatRoomtemplateTestDto(chatRoom);
+            chatRoomtemplateTestDtos.add(chatRoomtemplateTestDto);
+        }
+        return chatRoomtemplateTestDtos;
+    }
+
+
+
     @Transactional
     public ChatRoomResponseDto createChatRoom(ChatRoomCreateRequestDto chatRoomCreateRequestDto, UserDetailsImpl userDetailsImpl) {
-        Optional<User> user = userRepository.findByUserEmail(chatRoomCreateRequestDto.getOtherUserEmail());
+        Optional<User> user = userRepository.findByUserEmail(chatRoomCreateRequestDto.getFriendEmail());
 
         if (user.isEmpty()) {
             throw new IllegalArgumentException("유저가 존재하지 않습니다.");
