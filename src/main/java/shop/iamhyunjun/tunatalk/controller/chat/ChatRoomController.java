@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import shop.iamhyunjun.tunatalk.config.security.UserDetailsImpl;
-import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomCreateRequestDto;
-import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomDeleteResponseDto;
-import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomResponseDto;
-import shop.iamhyunjun.tunatalk.dto.chat.ChatRoomResponseListDto;
+import shop.iamhyunjun.tunatalk.dto.chat.*;
 import shop.iamhyunjun.tunatalk.service.chat.ChatRoomService;
 
 import java.util.List;
@@ -18,11 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
+
     @ResponseBody
     @PostMapping("/chats")
     public ChatRoomResponseDto chatroomCreate(@RequestBody ChatRoomCreateRequestDto chatRoomCreateRequestDto,
                                               @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
-        System.out.println(chatRoomCreateRequestDto.getOtherUserEmail());
+        //System.out.println(chatRoomCreateRequestDto.getOtherUserEmail());
         ChatRoomResponseDto chatRoomResponseDto = chatRoomService.createChatRoom(chatRoomCreateRequestDto, userDetailsImpl);
         return chatRoomResponseDto;
     }

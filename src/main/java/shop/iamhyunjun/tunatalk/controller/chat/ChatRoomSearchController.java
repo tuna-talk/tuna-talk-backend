@@ -22,7 +22,7 @@ public class ChatRoomSearchController {
     @GetMapping("/chats/search")
     public List<ChatRoomSearchResponseDto> chatSearch(@RequestBody ChatRoomSearchRequestDto chatRoomSearchRequestDto,
                                                       @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
-        System.out.println(chatRoomSearchRequestDto.getRoomName());
+        System.out.println(chatRoomSearchRequestDto.getFriendNickname());
         System.out.println(userDetailsImpl.getUser().getUserNickname());
         List<ChatRoomSearchResponseDto> chatRoomSearchResponseDtos = chatRoomSearchService.searchChatRoom(chatRoomSearchRequestDto, userDetailsImpl);
         return chatRoomSearchResponseDtos;

@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ChatRoomSearchRequestDto {
-    private String roomName;
+    private String friendNickname;
 
     public ChatRoomSearchRequestDto(String roomName) {
-        this.roomName = roomName;
-    }
+        this.friendNickname = roomName;
+    } //
 }
