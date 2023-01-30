@@ -23,8 +23,7 @@ public class Friend {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Friend(User user, FriendRequestDto friendRequestDto) {
-        this.user = user;
+    public Friend(FriendRequestDto friendRequestDto) {
         this.friendEmail = friendRequestDto.getFriendEmail();
         this.id = friendRequestDto.getId();
     }

@@ -11,6 +11,7 @@ import shop.iamhyunjun.tunatalk.config.exception.ErrorCode;
 import shop.iamhyunjun.tunatalk.config.jwt.JwtUtil;
 import shop.iamhyunjun.tunatalk.dto.user.UserLoginDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserRequestDto;
+import shop.iamhyunjun.tunatalk.dto.user.UserResponseDto;
 import shop.iamhyunjun.tunatalk.dto.user.UserSignupDto;
 import shop.iamhyunjun.tunatalk.entity.user.User;
 import shop.iamhyunjun.tunatalk.repository.user.UserRepository;
@@ -37,6 +38,7 @@ public class UserService {
         String userPw = userSignUpDto.getUserPw();
         String userPwCheck = userSignUpDto.getUserPwCheck();
         String userEmail = userSignUpDto.getUserEmail();
+        String userImage = "https://s3.console.aws.amazon.com/s3/object/ggobsarikuna?region=ap-northeast-2&prefix=static/kakao_2.jpg";
 
         // 아이디 중복 검사
         Optional<User> userNameDuplicate = userRepository.findByUserEmail(userSignUpDto.getUserEmail());
@@ -51,13 +53,15 @@ public class UserService {
             userPw = passwordEncoder.encode(userSignUpDto.getUserPw()); // 비밀번호 일치하면 인코딩
         }
 
-        User user = new User(userNickname, userPw, userEmail);
+        User user = new User(userNickname, userPw, userEmail, userImage);
         userRepository.save(user);
     }
 
-    public void login(UserLoginDto userLoginDto, HttpServletResponse response) {
+    public UserResponseDto login(UserLoginDto userLoginDto, HttpServletResponse response) {
         String userName = userLoginDto.getUserEmail();
         String userPw = userLoginDto.getUserPw();
+        String data = "로그인 성공";
+        int statucode = 200;
 
         // 아이디 일치 여부
         User user = userRepository.findByUserEmail(userName).orElseThrow(
@@ -69,6 +73,8 @@ public class UserService {
         }
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserEmail()));
+
+        return new UserResponseDto(data, statucode, user.getUserEmail(), user.getUserNickname(), user.getUserImage());
     }
 
     public UserRequestDto update(String userEmail, UserRequestDto userRequestDto) {

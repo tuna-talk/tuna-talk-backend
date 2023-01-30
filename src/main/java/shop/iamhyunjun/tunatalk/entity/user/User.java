@@ -39,10 +39,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Friend> userList = new ArrayList<>();
 
-    public User(String userNickname, String userPw, String userEmail) {
+    public User(String userNickname, String userPw, String userEmail, String userImage) {
         this.userNickname = userNickname;
         this.userPw = userPw;
         this.userEmail = userEmail;
+        this.userImage = userImage;
     }
 
     public void update(UserRequestDto userRequestDto) {
