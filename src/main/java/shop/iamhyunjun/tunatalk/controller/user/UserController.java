@@ -34,10 +34,9 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<?> login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response){
-        userService.login(userLoginDto, response);
-        String data = "로그인 성공";
-        return ResponseEntity.ok(new UserResponseDto(data, 200));
+    public UserResponseDto login(@RequestBody UserLoginDto userLoginDto,
+                                 HttpServletResponse response){
+        return userService.login(userLoginDto, response);
     }
 
     @PatchMapping("/{userEmail}")
