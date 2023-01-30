@@ -16,26 +16,6 @@ import java.util.List;
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
-    @GetMapping("/chat/room/{roomId}")
-    public String chatRoom(Model model) {
-        System.out.println();
-        return "chatroom";
-    }
-
-    //template test
-    @GetMapping("/chatrooms")
-    public String chatRooms(Model model) {
-        return "chatrooms";
-    }
-    //template test
-    @ResponseBody
-    @GetMapping("/chatrooms-list")
-    public List<ChatRoomtemplateTestDto> chatRoomsList() {
-        List<ChatRoomtemplateTestDto> chatRoomtemplateTestDtos = chatRoomService.readChatRooms();
-        return chatRoomtemplateTestDtos; //
-    }
-
-
     @ResponseBody
     @PostMapping("/chats")
     public ChatRoomResponseDto chatroomCreate(@RequestBody ChatRoomCreateRequestDto chatRoomCreateRequestDto,

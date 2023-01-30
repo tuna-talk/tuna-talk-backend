@@ -36,8 +36,8 @@ public class ChatRoomSearchService {
 
         List<ChatRoomSearchResponseDto> chatRoomSearchResponseDtos = new ArrayList<>();
         for (ChatRoom chatRoom : chatRooms) {
-            if (chatRoom.getUser1().getUserNickname().equals(chatRoomSearchRequestDto.getRoomName())
-                    || chatRoom.getUser2().getUserNickname().equals(chatRoomSearchRequestDto.getRoomName())) {
+            if (chatRoom.getUser1().getUserNickname().equals(chatRoomSearchRequestDto.getFriendNickname())
+                    || chatRoom.getUser2().getUserNickname().equals(chatRoomSearchRequestDto.getFriendNickname())) {
                 ChatRoomSearchResponseDto chatRoomSearchResponseDto = new ChatRoomSearchResponseDto(chatRoom, userDetailsImpl.getUser());
                 chatRoomSearchResponseDtos.add(chatRoomSearchResponseDto);
             }
