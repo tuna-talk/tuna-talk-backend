@@ -23,8 +23,21 @@ public class Friend {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Friend(FriendRequestDto friendRequestDto) {
+    @Column(nullable = true)
+    private String friendNickname;
+
+    @Column(nullable = true)
+    private String friendImage;
+
+    @Column(nullable = true)
+    private String friendMessage;
+
+    public Friend(User user, FriendRequestDto friendRequestDto, String friendNickname, String friendImage, String friendMessage) {
+        this.user = user;
         this.friendEmail = friendRequestDto.getFriendEmail();
         this.id = friendRequestDto.getId();
+        this.friendNickname = friendNickname;
+        this.friendImage = friendImage;
+        this.friendMessage = friendMessage;
     }
 }

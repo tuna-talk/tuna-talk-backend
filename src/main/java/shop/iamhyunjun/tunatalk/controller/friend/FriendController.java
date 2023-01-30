@@ -25,9 +25,10 @@ public class FriendController {
         return friendService.getUser(userDetails.getUser());
     }
 
-    @PostMapping("/")
-    public FriendResponseDto addFriend(@RequestBody FriendRequestDto friendRequestDto){
-        return friendService.addFriend(friendRequestDto);
+    @PostMapping("/{userEmail}")
+    public FriendResponseDto addFriend(@PathVariable String userEmail,
+                                       @RequestBody FriendRequestDto friendRequestDto){
+        return friendService.addFriend(userEmail, friendRequestDto);
     }
 
     @GetMapping("/{userEmail}/{friendEmail}")
