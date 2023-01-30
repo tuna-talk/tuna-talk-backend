@@ -35,7 +35,7 @@ public class ChatRoomService {
         for (ChatRoom chatRoom : chatRooms) {
             ChatRoomtemplateTestDto chatRoomtemplateTestDto = new ChatRoomtemplateTestDto(chatRoom);
             chatRoomtemplateTestDtos.add(chatRoomtemplateTestDto);
-        }
+        } //
         return chatRoomtemplateTestDtos;
     }
 

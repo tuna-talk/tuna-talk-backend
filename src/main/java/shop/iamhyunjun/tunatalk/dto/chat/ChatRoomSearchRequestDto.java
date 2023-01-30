@@ -10,5 +10,5 @@ public class ChatRoomSearchRequestDto {
 
     public ChatRoomSearchRequestDto(String roomName) {
         this.friendNickname = roomName;
-    }
+    } //
 }

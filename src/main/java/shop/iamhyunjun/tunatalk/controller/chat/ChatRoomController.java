@@ -32,7 +32,7 @@ public class ChatRoomController {
     @GetMapping("/chatrooms-list")
     public List<ChatRoomtemplateTestDto> chatRoomsList() {
         List<ChatRoomtemplateTestDto> chatRoomtemplateTestDtos = chatRoomService.readChatRooms();
-        return chatRoomtemplateTestDtos;
+        return chatRoomtemplateTestDtos; //
     }
 
 

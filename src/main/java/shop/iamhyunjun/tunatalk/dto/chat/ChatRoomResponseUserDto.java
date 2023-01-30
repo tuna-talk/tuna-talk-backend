@@ -14,7 +14,7 @@ public class ChatRoomResponseUserDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private String friendNickname;
-    private String userNickname;
+    private String userNickname; //
 
     public ChatRoomResponseUserDto(ChatRoom chatRoom, User user) {
         this.chatRoomId = chatRoom.getChatRoomId();
