@@ -18,6 +18,8 @@ public class UserResponseDto {
 
     private String userNickname;
 
+    private String userImage;
+
     public UserResponseDto(String data, int statuscode, User user) {
         this.data = data;
         this.statuscode = statuscode;

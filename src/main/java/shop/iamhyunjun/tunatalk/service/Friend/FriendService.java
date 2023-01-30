@@ -6,15 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.iamhyunjun.tunatalk.config.exception.CheckApiException;
 import shop.iamhyunjun.tunatalk.config.exception.ErrorCode;
-import shop.iamhyunjun.tunatalk.config.security.UserDetailsImpl;
 import shop.iamhyunjun.tunatalk.dto.friend.FriendRequestDto;
 import shop.iamhyunjun.tunatalk.dto.friend.FriendResponseDto;
+import shop.iamhyunjun.tunatalk.dto.friend.GetUserDto;
 import shop.iamhyunjun.tunatalk.entity.friend.Friend;
 import shop.iamhyunjun.tunatalk.entity.user.User;
 import shop.iamhyunjun.tunatalk.repository.friend.FriendRepository;
 import shop.iamhyunjun.tunatalk.repository.user.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,12 +26,9 @@ public class FriendService {
 
     private final UserRepository userRepository;
 
-    public FriendResponseDto addFriend(String userEmail, FriendRequestDto friendRequestDto) {
-        User user = userRepository.findByUserEmail(userEmail).orElseThrow(
-                () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
-        );
+    public FriendResponseDto addFriend(FriendRequestDto friendRequestDto) {
 
-        Friend friend = new Friend(user, friendRequestDto);
+        Friend friend = new Friend(friendRequestDto);
 
         if (userRepository.findByUserEmail(friendRequestDto.getFriendEmail()).isPresent()){
             friendRepository.save(friend);
@@ -72,5 +68,18 @@ public class FriendService {
         friendRepository.deleteFriendByFriendEmail(friendEmail);
 
         return "친구 삭제";
+    }
+
+    public GetUserDto getUser(User user) {
+        User findUser = userRepository.findByUserEmail(user.getUserEmail()).orElseThrow(
+                () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
+        );
+
+        String userEmail = findUser.getUserEmail();
+        String userNickname = findUser.getUserNickname();
+        String userImage = findUser.getUserImage();
+        String userMessage = findUser.getUserMessage();
+
+        return new GetUserDto(userEmail, userNickname, userImage, userMessage);
     }
 }
