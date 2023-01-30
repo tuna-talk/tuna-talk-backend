@@ -49,15 +49,16 @@ public class FriendService {
                 () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
         );
 
-        Friend friend = friendRepository.findByFriendEmail(friendEmail).orElseThrow(
+        User friend = userRepository.findByUserEmail(friendEmail).orElseThrow(
                 () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
         );
 
-        String friendNickname = friend.getFriendNickname();
-        String friendImage = friend.getFriendImage();
-        String friendMessage = friend.getFriendMessage();
+        String friendEmails = friend.getUserEmail();
+        String friendNickname = friend.getUserNickname();
+        String friendImage = friend.getUserImage();
+        String friendMessage = friend.getUserMessage();
 
-        return new FriendResponseDto(friend, friendNickname, friendImage, friendMessage);
+        return new FriendResponseDto(friend, friendEmails, friendNickname, friendImage, friendMessage);
 
 
 //        List<Friend> friendList = friendRepository.findAll();

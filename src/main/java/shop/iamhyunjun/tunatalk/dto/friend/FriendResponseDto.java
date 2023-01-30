@@ -3,6 +3,8 @@ package shop.iamhyunjun.tunatalk.dto.friend;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import shop.iamhyunjun.tunatalk.entity.friend.Friend;
+import shop.iamhyunjun.tunatalk.entity.user.User;
+
 @Getter
 @AllArgsConstructor
 public class FriendResponseDto {
@@ -14,6 +16,14 @@ public class FriendResponseDto {
     public FriendResponseDto(Friend friend, String friendNickname, String friendImage, String friendMessage) {
         this.id = friend.getId();
         this.friendEmail = friend.getFriendEmail();
+        this.friendNickname = friendNickname;
+        this.friendImage = friendImage;
+        this.friendMessage = friendMessage;
+    }
+
+    public FriendResponseDto(User friend, String friendEmail, String friendNickname, String friendImage, String friendMessage) {
+        this.id = friend.getId();
+        this.friendEmail = friendEmail;
         this.friendNickname = friendNickname;
         this.friendImage = friendImage;
         this.friendMessage = friendMessage;
