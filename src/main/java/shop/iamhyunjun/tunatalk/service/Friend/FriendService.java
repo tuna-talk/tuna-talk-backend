@@ -14,8 +14,6 @@ import shop.iamhyunjun.tunatalk.entity.user.User;
 import shop.iamhyunjun.tunatalk.repository.friend.FriendRepository;
 import shop.iamhyunjun.tunatalk.repository.user.UserRepository;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -31,15 +29,19 @@ public class FriendService {
                 () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
         );
 
-        Friend friend = new Friend(user, friendRequestDto);
+        User findFriend = userRepository.findByUserEmail(friendRequestDto.getFriendEmail()).orElseThrow(
+                () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
+        );
 
-        if (userRepository.findByUserEmail(friendRequestDto.getFriendEmail()).isPresent()){
-            friendRepository.save(friend);
-        } else {
-            throw new CheckApiException(ErrorCode.NOT_EXISTS_USER);
-        }
+        String friendNickname = findFriend.getUserNickname();
+        String friendImage = findFriend.getUserImage();
+        String friendMessage = findFriend.getUserMessage();
 
-        return new FriendResponseDto(friend);
+        Friend friend = new Friend(user, friendRequestDto, friendNickname, friendImage, friendMessage);
+
+        friendRepository.save(friend);
+
+        return new FriendResponseDto(friend, friendNickname, friendImage, friendMessage);
     }
 
     public FriendResponseDto searchFriend(String userEmail, String friendEmail) {
@@ -51,7 +53,11 @@ public class FriendService {
                 () -> new CheckApiException(ErrorCode.NOT_EXISTS_USER)
         );
 
-        return new FriendResponseDto(friend);
+        String friendNickname = friend.getFriendNickname();
+        String friendImage = friend.getFriendImage();
+        String friendMessage = friend.getFriendMessage();
+
+        return new FriendResponseDto(friend, friendNickname, friendImage, friendMessage);
 
 
 //        List<Friend> friendList = friendRepository.findAll();
