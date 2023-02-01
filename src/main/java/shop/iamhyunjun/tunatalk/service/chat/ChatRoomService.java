@@ -39,7 +39,16 @@ public class ChatRoomService {
 
         if (chatRoomRepository.findByUser1AndUser2(userDetailsImpl.getUser(), user.get()).isPresent()
                 || chatRoomRepository.findByUser1AndUser2(user.get(), userDetailsImpl.getUser()).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 채팅방입니다.");
+            System.out.println("새로운 테스트");
+            Optional<ChatRoom> chatRoom1 = chatRoomRepository.findByUser1AndUser2(userDetailsImpl.getUser(), user.get());
+            Optional<ChatRoom> chatRoom2 = chatRoomRepository.findByUser1AndUser2(user.get(), userDetailsImpl.getUser());
+            if (chatRoom1.isEmpty()) {
+                ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom2.get(), userDetailsImpl.getUser());
+                return chatRoomResponseDto;
+            } else {
+                ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom1.get(), userDetailsImpl.getUser());
+                return chatRoomResponseDto;
+            }
         }
 
         ChatRoom chatRoom = new ChatRoom(userDetailsImpl.getUser(), user.get());
